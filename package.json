@@ -1,0 +1,33 @@
+{
+  "name": "enpot",
+  "version": "0.0.1",
+  "description": "List gists & download them to current folder.",
+  "keywords": [
+    "gists",
+    "download"
+  ],
+  "homepage": "https://github.com/leny/enpot",
+  "author": {
+    "name": "leny",
+    "email": "info@flatland.be",
+    "url": "http://leny.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leny/enpot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/leny/enpot/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/leny/enpot/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
