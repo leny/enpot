@@ -25,9 +25,16 @@
       "url": "https://github.com/leny/enpot/blob/master/LICENSE-MIT"
     }
   ],
+  "preferGlobal": true,
+  "bin": {
+    "enpot": "lib/enpot.js"
+  },
   "engines": {
     "node": ">= 0.12.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "commander": "^2.9.0"
+  },
   "devDependencies": {}
 }
