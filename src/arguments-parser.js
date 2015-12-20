@@ -7,13 +7,11 @@
  * Licensed under the MIT license.
  */
 
-"use strict";
-
 import path from "path";
 
-let rOptionPattern = /^--?\w+/i;
+const OPTION_PATTERN = /^--?\w+/i;
 
-export default function( aArgs ) {
+let fArgumentParser = function( aArgs ) {
     let iCurrentIndex = 0,
         bForceMode = false,
         bShowMode = false,
@@ -21,9 +19,9 @@ export default function( aArgs ) {
         sGistID,
         sDestinationPath;
 
-    for( let sArg of aArgs ) {
-        if( rOptionPattern.test( sArg ) ) {
-            switch( sArg ) {
+    for ( let sArg of aArgs ) {
+        if ( OPTION_PATTERN.test( sArg ) ) {
+            switch ( sArg ) {
                 case "-f":
                 case "--force":
                     bForceMode = true;
@@ -37,9 +35,11 @@ export default function( aArgs ) {
                     bShowMode = true;
                     bForceMode = true;
                     break;
+
+                // no default
             }
         } else {
-            switch( iCurrentIndex ) {
+            switch ( iCurrentIndex ) {
                 case 0:
                     sUser = sArg;
                     break;
@@ -49,16 +49,20 @@ export default function( aArgs ) {
                 case 2:
                     sDestinationPath = sArg;
                     break;
+
+                // no default
             }
             iCurrentIndex++;
         }
     }
 
     return {
-        user: sUser,
-        gist: sGistID,
-        destination: path.resolve( process.cwd(), sDestinationPath || process.cwd() ),
-        force: bForceMode,
-        show: bShowMode
+        "user": sUser,
+        "gist": sGistID,
+        "destination": path.resolve( process.cwd(), sDestinationPath || process.cwd() ),
+        "force": bForceMode,
+        "show": bShowMode
     };
 };
+
+export default fArgumentParser;

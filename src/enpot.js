@@ -8,8 +8,6 @@
  * Licensed under the MIT license.
  */
 
-"use strict";
-
 import fs from "fs";
 import argsParser from "./arguments-parser";
 import { spinner, error, list, details, help, version, completion, success } from "./output";
@@ -18,23 +16,23 @@ import downloadGistFiles from "./gist/download";
 
 let aArgv = process.argv.slice( 2 );
 
-if( !aArgv[ 0 ] || [ "-h", "--help" ].indexOf( aArgv[ 0 ] ) > -1 ) {
+if ( !aArgv[ 0 ] || [ "-h", "--help" ].indexOf( aArgv[ 0 ] ) > -1 ) {
     help();
 }
 
-if( [ "-v", "--version" ].indexOf( aArgv[ 0 ] ) > -1 ) {
+if ( [ "-v", "--version" ].indexOf( aArgv[ 0 ] ) > -1 ) {
     version();
 }
 
-if( aArgv[ 0 ] === "completion" ) {
+if ( aArgv[ 0 ] === "completion" ) {
     completion();
 } else {
     let {
-        user: sGistUser,
-        gist: sGistID,
-        destination: sDestinationPath,
-        force: bForceReload,
-        show: bShowFiles
+        "user": sGistUser,
+        "gist": sGistID,
+        "destination": sDestinationPath,
+        "force": bForceReload,
+        "show": bShowFiles
     } = argsParser( aArgv );
 
     if ( fs.statSync( sDestinationPath ).isDirectory() === false ) {
@@ -45,15 +43,16 @@ if( aArgv[ 0 ] === "completion" ) {
 
     getUserGists( sGistUser, bForceReload && !sGistID )
         .then( ( oGists ) => {
-            if( sGistID ) {
+            if ( sGistID ) {
                 let oGist;
-                if( !( oGist = oGists[ sGistID ] ) ) {
+
+                if ( !( oGist = oGists[ sGistID ] ) ) {
                     error( `Unknown gist ${ chalk.yellow( sGistID ) } from user ${ chalk.cyan( sGistUser ) }.` );
                 }
                 if ( !oGist.files.length ) {
                     error( `No downloadable files in ${ chalk.yellow( sGistID ) } from user ${ chalk.cyan( sGistUser ) }.` );
                 }
-                if( bShowFiles ) {
+                if ( bShowFiles ) {
                     details( oGist );
                 }
                 return downloadGistFiles( oGist.files, sDestinationPath );

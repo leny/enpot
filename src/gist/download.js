@@ -7,13 +7,11 @@
  * Licensed under the MIT license.
  */
 
-"use strict";
-
 import Promise from "bluebird";
 import request from "request";
 import fs from "fs";
 
-export default function( aGistFiles, sDestinationPath ) {
+let fDownload = function( aGistFiles, sDestinationPath ) {
     return Promise.all( aGistFiles.map( ( oGistFile ) => {
         let sFileDestinationPath = `${ sDestinationPath }/${ oGistFile.name }`;
 
@@ -28,3 +26,5 @@ export default function( aGistFiles, sDestinationPath ) {
         } );
     } ) );
 };
+
+export default fDownload;

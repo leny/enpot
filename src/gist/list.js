@@ -7,8 +7,6 @@
  * Licensed under the MIT license.
  */
 
-"use strict";
-
 import Promise from "bluebird";
 import request from "request";
 import Pandri from "pandri";
@@ -18,9 +16,10 @@ let sGitHubAPIBaseURL = "https://api.github.com",
         "headers": {
             "User-Agent": "io.github.leny.enpot"
         }
-    };
+    },
+    fList;
 
-export default function( sUserName, bForce ) {
+fList = function( sUserName, bForce ) {
 
     let oRequestOptions = Object.assign( {}, oRequestDefaultOptions, {
         "url": `${ sGitHubAPIBaseURL }/users/${ sUserName }/gists`
@@ -30,21 +29,22 @@ export default function( sUserName, bForce ) {
         let oCache;
 
         oCache = new Pandri( "enpot", `${ __dirname }/../enpot.cache.json`, () => {
-            if( !bForce && oCache.get( sUserName ) ) {
+            if ( !bForce && oCache.get( sUserName ) ) {
                 return fResolve( oCache.get( sUserName ) );
             }
             request( oRequestOptions, ( oError, oResponse, sRawBody ) => {
                 let oParsedGists = {};
 
-                if( oError ) {
+                if ( oError ) {
                     return fReject( oError );
                 }
 
-                for( let oGistInfo of JSON.parse( sRawBody ) ) {
+                for ( let oGistInfo of JSON.parse( sRawBody ) ) {
                     oParsedGists[ oGistInfo.id ] = {
                         "description": oGistInfo.description,
                         "files": Object.keys( oGistInfo.files ).map( ( sFileName ) => {
                             let oFile = oGistInfo.files[ sFileName ];
+
                             return {
                                 "name": oFile.filename,
                                 "size": oFile.size,
@@ -62,3 +62,5 @@ export default function( sUserName, bForce ) {
         } );
     } );
 };
+
+export default fList;
