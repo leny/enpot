@@ -1,6 +1,6 @@
 {
   "name": "enpot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "List gists & download them to current folder.",
   "keywords": [
     "gists",
